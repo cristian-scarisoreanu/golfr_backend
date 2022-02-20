@@ -30,15 +30,16 @@ module Api
     def show
       user = User.find_by(id: params[:id])
       if user.nil?
-        render json:{
+        render json: {
           errors: 'No user found'
         }, status: :not_found
       else
-          render json:{
+        render json: {
           user: {
             name: user.name,
             scores: user.scores.order(played_at: :desc, id: :desc)
-          } }.to_json
+          }
+        }.to_json
       end
     end
   end
