@@ -29,6 +29,8 @@ module Api
 
     def show
       user = User.find_by(id: params[:id])
+      serialized_scores = user.scores.map(&:serialize)
+
       if user.nil?
         render json: {
           errors: 'No user found'
@@ -37,7 +39,7 @@ module Api
         render json: {
           user: {
             name: user.name,
-            scores: user.scores.order(played_at: :desc, id: :desc)
+            scores: serialized_scores
           }
         }.to_json
       end
